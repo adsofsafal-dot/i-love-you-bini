@@ -4,438 +4,767 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>For Bini ❤️</title>
+    <title>For Bini</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: "Segoe UI", sans-serif;
         }
 
         body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f7;
+            color: #222;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff758c, #ff7eb3, #c471ed);
-            color: white;
+        }
+
+        /* =========================
+           FIRST POPUP
+        ========================= */
+
+        .popup-bg {
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.55);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 1000;
+
+            padding: 20px;
+        }
+
+        .popup {
+            background: white;
+
+            width: 100%;
+            max-width: 430px;
+
+            padding: 35px 30px;
+
+            border-radius: 18px;
+
             text-align: center;
-            overflow-x: hidden;
+
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+
+            animation: popupIn 0.4s ease;
         }
 
-        .container {
-            max-width: 750px;
-            margin: auto;
-            padding: 40px 20px;
-        }
+        @keyframes popupIn {
 
-        .heart {
-            font-size: 75px;
-            animation: heartbeat 1.5s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
             }
-            50% {
-                transform: scale(1.15);
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
+
         }
 
-        h1 {
-            font-size: 42px;
-            margin: 15px 0;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(12px);
-            border-radius: 25px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .card h2 {
+        .popup h2 {
+            font-size: 25px;
             margin-bottom: 15px;
         }
 
+        .popup p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .popup button {
+            background: #222;
+            color: white;
+
+            border: none;
+
+            padding: 12px 28px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+        }
+
+        .popup button:hover {
+            background: #444;
+        }
+
+
+        /* =========================
+           MAIN PAGE
+        ========================= */
+
+        .page {
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 60px 20px;
+        }
+
+        header {
+            text-align: center;
+
+            padding-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: #666;
+
+            font-size: 17px;
+        }
+
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .card {
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 30px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 5px 25px rgba(0,0,0,0.06);
+        }
+
+        .card h2 {
+            font-size: 21px;
+
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #555;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           TOGETHER COUNTER
+        ========================= */
+
+        .counter-card {
+            text-align: center;
+
+            background: #222;
+
+            color: white;
+        }
+
+        .counter-card h2 {
+            color: white;
+        }
+
+        .counter-card p {
+            color: #bbb;
+        }
+
+        .counter {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .time-box {
+            background: #333;
+
+            padding: 18px 10px;
+
+            border-radius: 10px;
+        }
+
+        .time-box span {
+            display: block;
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+        .time-box small {
+            color: #aaa;
+        }
+
+
+        /* =========================
+           SMALL MESSAGES
+        ========================= */
+
+        .message {
+            border-left: 3px solid #222;
+
+            padding-left: 18px;
+
+            margin-top: 18px;
+        }
+
+        .message button {
+            margin-top: 15px;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
         button {
             border: none;
-            padding: 13px 25px;
-            margin-top: 15px;
-            border-radius: 30px;
-            background: white;
-            color: #ff4f81;
-            font-size: 16px;
-            font-weight: bold;
+
+            background: #222;
+
+            color: white;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
             cursor: pointer;
-            transition: 0.3s;
+
+            font-size: 14px;
         }
 
         button:hover {
-            transform: scale(1.08);
+            background: #444;
         }
+
+
+        /* =========================
+           HIDDEN CONTENT
+        ========================= */
 
         .hidden {
             display: none;
         }
 
-        #message {
-            margin-top: 18px;
-            font-size: 19px;
-            line-height: 1.6;
+
+        /* =========================
+           LIST
+        ========================= */
+
+        ul {
+            list-style: none;
         }
 
-        .choices button {
-            margin: 8px;
+        li {
+            padding: 13px 0;
+
+            border-bottom: 1px solid #eee;
+
+            color: #555;
         }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 15px;
+        li:last-child {
+            border-bottom: none;
         }
 
-        .gallery img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 15px;
-        }
 
-        .big-message {
-            font-size: 28px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+        /* =========================
+           FOOTER
+        ========================= */
 
         footer {
-            margin-top: 35px;
-            opacity: 0.8;
+            text-align: center;
+
+            color: #999;
+
+            padding: 30px 0;
         }
 
-        /* Floating hearts */
 
-        .floating-heart {
-            position: fixed;
-            bottom: -50px;
-            pointer-events: none;
-            animation: floatUp linear forwards;
-        }
+        /* =========================
+           MOBILE
+        ========================= */
 
-        @keyframes floatUp {
-            from {
-                transform: translateY(0);
-                opacity: 1;
+        @media (max-width: 600px) {
+
+            .page {
+                padding: 40px 15px;
             }
 
-            to {
-                transform: translateY(-110vh);
-                opacity: 0;
+            header h1 {
+                font-size: 32px;
             }
+
+            .card {
+                padding: 23px;
+            }
+
+            .counter {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-    <div class="heart">🥹❤️</div>
+    <!-- =================================
+         FIRST POPUP
+    ================================== -->
 
-    <h1>I LOVE YOU, BINI</h1>
+    <div class="popup-bg" id="welcomePopup">
 
-    <p class="subtitle">
-        This little website is made specially for you. 💕
-    </p>
+        <div class="popup">
 
+            <h2>Hey, Bini.</h2>
 
-    <!-- LOVE LETTER -->
+            <p>
+                I made something small for you.
+                Nothing complicated.
+                Just a few things I wanted you to see.
+            </p>
 
-    <div class="card">
-
-        <h2>💌 Open My Letter</h2>
-
-        <p id="letter" class="hidden">
-            My Bini ❤️<br><br>
-
-            I don't always know how to explain what I feel,
-            but I know one thing for sure...
-
-            <br><br>
-
-            You make my ordinary days feel special.
-            Your smile makes me happy,
-            your presence makes everything better,
-            and having you in my life means more than
-            words can explain.
-
-            <br><br>
-
-            I love you. ❤️
-        </p>
-
-        <button onclick="openLetter()">
-            Open Letter 💌
-        </button>
-
-    </div>
-
-
-    <!-- COMPLIMENT -->
-
-    <div class="card">
-
-        <h2>🌸 Want a Compliment?</h2>
-
-        <p id="compliment">
-            Click the button. 😌
-        </p>
-
-        <button onclick="compliment()">
-            Tell Me ❤️
-        </button>
-
-    </div>
-
-
-    <!-- LOVE QUIZ -->
-
-    <div class="card">
-
-        <h2>💕 Little Question</h2>
-
-        <p>
-            Who is the cutest person in the world?
-        </p>
-
-        <div class="choices">
-
-            <button onclick="answer('wrong')">
-                Someone else 😭
-            </button>
-
-            <button onclick="answer('right')">
-                BINI ❤️
+            <button onclick="closePopup()">
+                Open
             </button>
 
         </div>
 
-        <p id="answer"></p>
-
     </div>
 
 
-    <!-- MEMORIES -->
 
-    <div class="card">
+    <!-- =================================
+         MAIN PAGE
+    ================================== -->
 
-        <h2>📸 Our Memories</h2>
-
-        <p>
-            One day, we'll fill this with our favorite memories. ❤️
-        </p>
-
-        <div class="gallery">
-
-            <!-- Replace these with your photos -->
-
-            <img src="https://picsum.photos/400/400?random=1">
-            <img src="https://picsum.photos/400/400?random=2">
-            <img src="https://picsum.photos/400/400?random=3">
-
-        </div>
-
-    </div>
+    <main class="page">
 
 
-    <!-- SURPRISE -->
+        <!-- HEADER -->
 
-    <div class="card">
+        <header>
 
-        <h2>🎁 Secret Button</h2>
+            <h1>For Bini.</h1>
 
-        <p>
-            There might be something waiting for you...
-        </p>
+            <p>
+                Since 13 June 2026.
+            </p>
 
-        <button onclick="surprise()">
-            Don't Click 😳
-        </button>
-
-        <p id="surprise" class="big-message"></p>
-
-    </div>
+        </header>
 
 
-    <!-- FINAL -->
 
-    <div class="card">
+        <!-- =================================
+             TOGETHER COUNTER
+        ================================== -->
 
-        <h2>❤️ One Last Thing</h2>
+        <section class="card counter-card">
 
-        <button onclick="finalMessage()">
-            Click Me
-        </button>
+            <h2>
+                We've been together for
+            </h2>
 
-        <p id="final" class="big-message"></p>
-
-    </div>
-
-
-    <footer>
-        Made with ❤️ only for Bini
-    </footer>
-
-</div>
+            <p>
+                Since 13 June 2026
+            </p>
 
 
-<script>
+            <div class="counter">
 
-    // LOVE LETTER
+                <div class="time-box">
+                    <span id="days">0</span>
+                    <small>Days</small>
+                </div>
 
-    function openLetter() {
+                <div class="time-box">
+                    <span id="hours">0</span>
+                    <small>Hours</small>
+                </div>
 
-        const letter = document.getElementById("letter");
+                <div class="time-box">
+                    <span id="minutes">0</span>
+                    <small>Minutes</small>
+                </div>
 
-        letter.classList.toggle("hidden");
+                <div class="time-box">
+                    <span id="seconds">0</span>
+                    <small>Seconds</small>
+                </div>
 
-    }
+            </div>
+
+        </section>
 
 
-    // RANDOM COMPLIMENTS
 
-    function compliment() {
+        <!-- =================================
+             SMALL MESSAGE
+        ================================== -->
 
-        const compliments = [
+        <section class="card">
 
-            "Your smile is my favorite thing. ❤️",
+            <h2>One thing.</h2>
 
-            "You make my heart feel at home. 🥹",
+            <p>
+                I don't need a special reason to make this.
+                I just wanted you to have something that
+                reminds you of the day we started.
+            </p>
 
-            "You are beautiful inside and out. 🌸",
+        </section>
 
-            "You're my favorite person. ❤️",
 
-            "Every day with you feels special. 💕",
 
-            "You're the best notification on my phone. 😂❤️",
+        <!-- =================================
+             OPEN MESSAGE
+        ================================== -->
 
-            "I would choose you again and again. 🫶"
+        <section class="card">
+
+            <h2>A message for you</h2>
+
+            <button onclick="showMessage()">
+                Read it
+            </button>
+
+            <div
+                id="personalMessage"
+                class="message hidden"
+            >
+
+                <p>
+                    I know I can't predict what happens
+                    in the future, but I'm glad that
+                    this is where we are right now.
+                </p>
+
+                <br>
+
+                <p>
+                    Thank you for choosing me.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             THINGS I LIKE
+        ================================== -->
+
+        <section class="card">
+
+            <h2>Things I like about you</h2>
+
+            <ul>
+
+                <li>Your way of talking.</li>
+
+                <li>The way you make ordinary moments better.</li>
+
+                <li>Your sense of humour.</li>
+
+                <li>The little things you do without noticing.</li>
+
+                <li>Honestly, just being around you.</li>
+
+            </ul>
+
+        </section>
+
+
+
+        <!-- =================================
+             RANDOM MESSAGE
+        ================================== -->
+
+        <section class="card">
+
+            <h2>Random reminder</h2>
+
+            <p id="randomMessage">
+                Click the button.
+            </p>
+
+            <button onclick="randomMessage()">
+                Another one
+            </button>
+
+        </section>
+
+
+
+        <!-- =================================
+             OUR DATE
+        ================================== -->
+
+        <section class="card">
+
+            <h2>13 June 2026</h2>
+
+            <p>
+                The day I asked you to be with me.
+            </p>
+
+            <div class="message">
+
+                <p>
+                    I don't think I'll forget this date.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             LAST SECTION
+        ================================== -->
+
+        <section class="card">
+
+            <h2>That's it.</h2>
+
+            <p>
+                No huge speech.
+                No complicated message.
+                Just wanted to make something for you.
+            </p>
+
+            <br>
+
+            <p>
+                — Me
+            </p>
+
+        </section>
+
+
+
+        <footer>
+
+            13.06.2026 — ❤️
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================== -->
+
+    <script>
+
+
+        /* ===============================
+           POPUP
+        =============================== */
+
+        function closePopup() {
+
+            document.getElementById(
+                "welcomePopup"
+            ).style.display = "none";
+
+        }
+
+
+
+        /* ===============================
+           START DATE
+        =============================== */
+
+        const startDate =
+            new Date("2026-06-13T00:00:00");
+
+
+
+        /* ===============================
+           LIVE COUNTER
+        =============================== */
+
+        function updateCounter() {
+
+            const now = new Date();
+
+            let difference =
+                now - startDate;
+
+
+            if (difference < 0) {
+
+                difference = 0;
+
+            }
+
+
+            const totalSeconds =
+                Math.floor(
+                    difference / 1000
+                );
+
+
+            const days =
+                Math.floor(
+                    totalSeconds /
+                    (60 * 60 * 24)
+                );
+
+
+            const hours =
+                Math.floor(
+                    (totalSeconds %
+                    (60 * 60 * 24))
+                    / (60 * 60)
+                );
+
+
+            const minutes =
+                Math.floor(
+                    (totalSeconds %
+                    (60 * 60))
+                    / 60
+                );
+
+
+            const seconds =
+                totalSeconds % 60;
+
+
+            document.getElementById(
+                "days"
+            ).innerText = days;
+
+
+            document.getElementById(
+                "hours"
+            ).innerText =
+                String(hours).padStart(2, "0");
+
+
+            document.getElementById(
+                "minutes"
+            ).innerText =
+                String(minutes).padStart(2, "0");
+
+
+            document.getElementById(
+                "seconds"
+            ).innerText =
+                String(seconds).padStart(2, "0");
+
+        }
+
+
+        updateCounter();
+
+
+        setInterval(
+            updateCounter,
+            1000
+        );
+
+
+
+        /* ===============================
+           PERSONAL MESSAGE
+        =============================== */
+
+        function showMessage() {
+
+            const message =
+                document.getElementById(
+                    "personalMessage"
+                );
+
+            message.classList.toggle(
+                "hidden"
+            );
+
+        }
+
+
+
+        /* ===============================
+           RANDOM MESSAGES
+        =============================== */
+
+        const messages = [
+
+            "Just checking in: I still like you a lot.",
+
+            "You crossed my mind again.",
+
+            "13 June was a pretty good day.",
+
+            "I'm glad it was you.",
+
+            "This is your reminder that you're appreciated.",
+
+            "Nothing important. Just wanted to say hi.",
+
+            "Still happy about us.",
+
+            "You make a pretty good girlfriend.",
+
+            "I hope you're having a good day.",
+
+            "That's all. Have a good one."
 
         ];
 
-        const random =
-            Math.floor(Math.random() * compliments.length);
 
-        document.getElementById("compliment").innerText =
-            compliments[random];
+        function randomMessage() {
 
-    }
+            const random =
+                Math.floor(
+                    Math.random() *
+                    messages.length
+                );
 
 
-    // QUIZ
-
-    function answer(type) {
-
-        const result =
-            document.getElementById("answer");
-
-        if (type === "right") {
-
-            result.innerHTML =
-                "Correct! 😌❤️ You already knew the answer.";
-
-        } else {
-
-            result.innerHTML =
-                "Wrong answer! 😭 Try again. 😂❤️";
+            document.getElementById(
+                "randomMessage"
+            ).innerText =
+                messages[random];
 
         }
 
-    }
 
+    </script>
 
-    // SECRET SURPRISE
-
-    function surprise() {
-
-        document.getElementById("surprise").innerHTML =
-            "I LOVE YOU MORE THAN YOU KNOW. ❤️🥹";
-
-        createHearts(20);
-
-    }
-
-
-    // FINAL MESSAGE
-
-    function finalMessage() {
-
-        document.getElementById("final").innerHTML =
-            "Bini, will you stay with me forever? 🥹❤️";
-
-        createHearts(30);
-
-    }
-
-
-    // FLOATING HEARTS
-
-    function createHeart() {
-
-        const heart =
-            document.createElement("div");
-
-        heart.className = "floating-heart";
-
-        heart.innerHTML =
-            ["❤️", "💕", "💗", "💖", "🥹", "🌸"]
-            [Math.floor(Math.random() * 6)];
-
-        heart.style.left =
-            Math.random() * 100 + "vw";
-
-        heart.style.fontSize =
-            (15 + Math.random() * 30) + "px";
-
-        heart.style.animationDuration =
-            (4 + Math.random() * 5) + "s";
-
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-
-            heart.remove();
-
-        }, 9000);
-
-    }
-
-
-    function createHearts(number) {
-
-        for (let i = 0; i < number; i++) {
-
-            setTimeout(createHeart, i * 100);
-
-        }
-
-    }
-
-
-    // Automatically create hearts
-
-    setInterval(createHeart, 700);
-
-</script>
 
 </body>
 </html>
