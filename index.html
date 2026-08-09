@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>For Bini</title>
+    <title>For my Bini Mini</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,274 +17,256 @@
             font-family: Arial, Helvetica, sans-serif;
             background: #f7f7f7;
             color: #222;
-            min-height: 100vh;
         }
 
         /* =========================
-           FIRST POPUP
+           HERO
         ========================= */
 
-        .popup-bg {
-            position: fixed;
-            inset: 0;
+        .hero {
+            background: linear-gradient(
+                135deg,
+                #ff7394,
+                #ff6f91
+            );
 
-            background: rgba(0, 0, 0, 0.55);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            z-index: 1000;
-
-            padding: 20px;
-        }
-
-        .popup {
-            background: white;
-
-            width: 100%;
-            max-width: 430px;
-
-            padding: 35px 30px;
-
-            border-radius: 18px;
-
-            text-align: center;
-
-            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-
-            animation: popupIn 0.4s ease;
-        }
-
-        @keyframes popupIn {
-
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-
-        }
-
-        .popup h2 {
-            font-size: 25px;
-            margin-bottom: 15px;
-        }
-
-        .popup p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
-
-        .popup button {
-            background: #222;
             color: white;
-
-            border: none;
-
-            padding: 12px 28px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            font-size: 15px;
+            text-align: center;
+            padding: 55px 20px;
         }
 
-        .popup button:hover {
-            background: #444;
+        .hero h1 {
+            font-size: clamp(34px, 6vw, 52px);
+            font-weight: 800;
         }
-
 
         /* =========================
-           MAIN PAGE
+           FLOATING HEARTS
+        ========================= */
+
+        .floating-heart {
+            position: fixed;
+            bottom: -40px;
+
+            font-size: 22px;
+
+            pointer-events: none;
+            z-index: 5;
+
+            animation: heartPop 4s ease-out forwards;
+        }
+
+        @keyframes heartPop {
+            0% {
+                transform: translateY(0) scale(.4);
+                opacity: 0;
+            }
+
+            15% {
+                transform: translateY(-20px) scale(1);
+                opacity: 1;
+            }
+
+            70% {
+                opacity: .9;
+            }
+
+            100% {
+                transform: translateY(-100vh) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           MAIN
         ========================= */
 
         .page {
-            max-width: 850px;
-
+            width: min(1000px, calc(100% - 30px));
             margin: auto;
-
-            padding: 60px 20px;
+            padding: 45px 0 60px;
         }
 
-        header {
+        .intro {
             text-align: center;
-
-            padding-bottom: 50px;
+            margin-bottom: 28px;
         }
 
-        header h1 {
-            font-size: 42px;
-
-            margin-bottom: 12px;
+        .intro h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
         }
 
-        header p {
-            color: #666;
-
-            font-size: 17px;
+        .intro p {
+            color: #777;
         }
-
 
         /* =========================
-           CARDS
-        ========================= */
-
-        .card {
-            background: white;
-
-            border-radius: 16px;
-
-            padding: 30px;
-
-            margin-bottom: 22px;
-
-            box-shadow:
-                0 5px 25px rgba(0,0,0,0.06);
-        }
-
-        .card h2 {
-            font-size: 21px;
-
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            color: #555;
-
-            line-height: 1.7;
-        }
-
-
-        /* =========================
-           TOGETHER COUNTER
+           COUNTER
         ========================= */
 
         .counter-card {
-            text-align: center;
-
-            background: #222;
+            background: linear-gradient(
+                135deg,
+                #ff6f91,
+                #ff8fab
+            );
 
             color: white;
+            border-radius: 20px;
+            padding: 38px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(255, 105, 135, .25);
+
+            text-align: center;
         }
 
         .counter-card h2 {
-            color: white;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
-        .counter-card p {
-            color: #bbb;
+        .counter-card .since {
+            color: rgba(255,255,255,.85);
+            margin-bottom: 28px;
+            font-size: 17px;
         }
 
         .counter {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 10px;
-
-            margin-top: 25px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
         }
 
         .time-box {
-            background: #333;
+            background: rgba(255,255,255,.18);
 
-            padding: 18px 10px;
+            border:
+                1px solid
+                rgba(255,255,255,.25);
 
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 22px 10px;
         }
 
         .time-box span {
             display: block;
 
-            font-size: 28px;
+            font-size: 34px;
+            font-weight: 700;
 
-            font-weight: bold;
+            margin-bottom: 5px;
         }
 
         .time-box small {
-            color: #aaa;
-        }
-
-
-        /* =========================
-           SMALL MESSAGES
-        ========================= */
-
-        .message {
-            border-left: 3px solid #222;
-
-            padding-left: 18px;
-
-            margin-top: 18px;
-        }
-
-        .message button {
-            margin-top: 15px;
-        }
-
-
-        /* =========================
-           BUTTONS
-        ========================= */
-
-        button {
-            border: none;
-
-            background: #222;
-
-            color: white;
-
-            padding: 11px 20px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
+            color: rgba(255,255,255,.85);
             font-size: 14px;
         }
 
-        button:hover {
-            background: #444;
+        /* =========================
+           BOTTOM BUTTON
+        ========================= */
+
+        .reveal-section {
+            text-align: center;
+            padding: 28px 0 5px;
         }
 
+        .reveal-button {
+            border: none;
+            border-radius: 10px;
+
+            padding: 13px 22px;
+
+            background: #ff7394;
+            color: white;
+
+            cursor: pointer;
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+        .reveal-button:hover {
+            transform: translateY(-2px);
+            background: #f45f83;
+        }
 
         /* =========================
-           HIDDEN CONTENT
+           RANDOM MESSAGE
         ========================= */
+
+        .bottom-alert {
+            width: min(500px, 100%);
+
+            margin: 22px auto 0;
+
+            padding: 30px 24px;
+
+            background: white;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(255,105,135,.18);
+
+            border:
+                1px solid
+                #ffd6df;
+
+            animation: popupIn .35s ease;
+        }
+
+        .bottom-alert h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .from-safal {
+            margin-top: 16px;
+
+            color: #888 !important;
+            font-size: 14px !important;
+        }
+
+        .close-alert {
+            margin-top: 18px;
+
+            border: none;
+            border-radius: 8px;
+
+            padding: 9px 18px;
+
+            background: #222;
+            color: white;
+
+            cursor: pointer;
+        }
 
         .hidden {
             display: none;
         }
 
+        @keyframes popupIn {
+            from {
+                opacity: 0;
 
-        /* =========================
-           LIST
-        ========================= */
+                transform:
+                    translateY(18px)
+                    scale(.96);
+            }
 
-        ul {
-            list-style: none;
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
         }
-
-        li {
-            padding: 13px 0;
-
-            border-bottom: 1px solid #eee;
-
-            color: #555;
-        }
-
-        li:last-child {
-            border-bottom: none;
-        }
-
 
         /* =========================
            FOOTER
@@ -296,125 +277,147 @@
 
             color: #999;
 
-            padding: 30px 0;
-        }
+            padding: 35px 0 0;
 
+            font-size: 14px;
+        }
 
         /* =========================
            MOBILE
         ========================= */
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
 
-            .page {
-                padding: 40px 15px;
+            .hero {
+                padding: 45px 20px;
             }
 
-            header h1 {
-                font-size: 32px;
+            .counter-card {
+                padding: 25px 15px;
             }
 
-            .card {
-                padding: 23px;
+            .counter-card h2 {
+                font-size: 23px;
             }
 
             .counter {
-                grid-template-columns:
-                    repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
 
+            .time-box span {
+                font-size: 29px;
+            }
         }
 
     </style>
-
 </head>
 
 
 <body>
 
 
-    <!-- =================================
-         FIRST POPUP
-    ================================== -->
+    <!-- =========================
+         TOP
+    ========================= -->
 
-    <div class="popup-bg" id="welcomePopup">
+    <section class="hero">
 
-        <div class="popup">
+        <h1>
+            For my Bini Mini.
+        </h1>
 
-            <h2>Hey, Bini.</h2>
-
-            <p>
-                I made something small for you.
-                Nothing complicated.
-                Just a few things I wanted you to see.
-            </p>
-
-            <button onclick="closePopup()">
-                Open
-            </button>
-
-        </div>
-
-    </div>
+    </section>
 
 
-
-    <!-- =================================
-         MAIN PAGE
-    ================================== -->
 
     <main class="page">
 
 
-        <!-- HEADER -->
+        <!-- =========================
+             INTRO
+        ========================= -->
 
-        <header>
+        <div class="intro">
 
-            <h1>For Bini.</h1>
+            <h2>
+                Since 13 June 2026.
+            </h2>
 
             <p>
-                Since 13 June 2026.
+                A small reminder of how long
+                we've been together.
             </p>
 
-        </header>
+        </div>
 
 
 
-        <!-- =================================
-             TOGETHER COUNTER
-        ================================== -->
+        <!-- =========================
+             RELATIONSHIP COUNTER
+        ========================= -->
 
-        <section class="card counter-card">
+        <section class="counter-card">
 
             <h2>
                 We've been together for
             </h2>
 
-            <p>
-                Since 13 June 2026
+            <p class="since">
+                13 June 2026 · 1:22 AM
             </p>
 
 
             <div class="counter">
 
                 <div class="time-box">
-                    <span id="days">0</span>
-                    <small>Days</small>
+
+                    <span id="days">
+                        0
+                    </span>
+
+                    <small>
+                        Days
+                    </small>
+
                 </div>
 
-                <div class="time-box">
-                    <span id="hours">0</span>
-                    <small>Hours</small>
-                </div>
 
                 <div class="time-box">
-                    <span id="minutes">0</span>
-                    <small>Minutes</small>
+
+                    <span id="hours">
+                        00
+                    </span>
+
+                    <small>
+                        Hours
+                    </small>
+
                 </div>
 
+
                 <div class="time-box">
-                    <span id="seconds">0</span>
-                    <small>Seconds</small>
+
+                    <span id="minutes">
+                        00
+                    </span>
+
+                    <small>
+                        Minutes
+                    </small>
+
+                </div>
+
+
+                <div class="time-box">
+
+                    <span id="seconds">
+                        00
+                    </span>
+
+                    <small>
+                        Seconds
+                    </small>
+
                 </div>
 
             </div>
@@ -423,52 +426,40 @@
 
 
 
-        <!-- =================================
-             SMALL MESSAGE
-        ================================== -->
+        <!-- =========================
+             BOTTOM REVEAL
+        ========================= -->
 
-        <section class="card">
+        <section class="reveal-section">
 
-            <h2>One thing.</h2>
-
-            <p>
-                I don't need a special reason to make this.
-                I just wanted you to have something that
-                reminds you of the day we started.
-            </p>
-
-        </section>
-
-
-
-        <!-- =================================
-             OPEN MESSAGE
-        ================================== -->
-
-        <section class="card">
-
-            <h2>A message for you</h2>
-
-            <button onclick="showMessage()">
-                Read it
+            <button
+                class="reveal-button"
+                onclick="revealMessage()"
+            >
+                Press this when you reach the bottom
             </button>
+
 
             <div
-                id="personalMessage"
-                class="message hidden"
+                id="bottomAlert"
+                class="bottom-alert hidden"
             >
 
-                <p>
-                    I know I can't predict what happens
-                    in the future, but I'm glad that
-                    this is where we are right now.
+                <h2 id="randomLoveMessage">
+                    I'm glad it was you.
+                </h2>
+
+                <p class="from-safal">
+                    — From Safal
                 </p>
 
-                <br>
 
-                <p>
-                    Thank you for choosing me.
-                </p>
+                <button
+                    class="close-alert"
+                    onclick="hideMessage()"
+                >
+                    Close
+                </button>
 
             </div>
 
@@ -476,103 +467,13 @@
 
 
 
-        <!-- =================================
-             THINGS I LIKE
-        ================================== -->
-
-        <section class="card">
-
-            <h2>Things I like about you</h2>
-
-            <ul>
-
-                <li>Your way of talking.</li>
-
-                <li>The way you make ordinary moments better.</li>
-
-                <li>Your sense of humour.</li>
-
-                <li>The little things you do without noticing.</li>
-
-                <li>Honestly, just being around you.</li>
-
-            </ul>
-
-        </section>
-
-
-
-        <!-- =================================
-             RANDOM MESSAGE
-        ================================== -->
-
-        <section class="card">
-
-            <h2>Random reminder</h2>
-
-            <p id="randomMessage">
-                Click the button.
-            </p>
-
-            <button onclick="randomMessage()">
-                Another one
-            </button>
-
-        </section>
-
-
-
-        <!-- =================================
-             OUR DATE
-        ================================== -->
-
-        <section class="card">
-
-            <h2>13 June 2026</h2>
-
-            <p>
-                The day I asked you to be with me.
-            </p>
-
-            <div class="message">
-
-                <p>
-                    I don't think I'll forget this date.
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================
-             LAST SECTION
-        ================================== -->
-
-        <section class="card">
-
-            <h2>That's it.</h2>
-
-            <p>
-                No huge speech.
-                No complicated message.
-                Just wanted to make something for you.
-            </p>
-
-            <br>
-
-            <p>
-                — Me
-            </p>
-
-        </section>
-
-
+        <!-- =========================
+             FOOTER
+        ========================= -->
 
         <footer>
 
-            13.06.2026 — ❤️
+            13.06.2026 — made for Bini ❤️
 
         </footer>
 
@@ -581,52 +482,38 @@
 
 
 
-    <!-- =================================
+    <!-- =========================
          JAVASCRIPT
-    ================================== -->
+    ========================= -->
 
     <script>
 
-
-        /* ===============================
-           POPUP
-        =============================== */
-
-        function closePopup() {
-
-            document.getElementById(
-                "welcomePopup"
-            ).style.display = "none";
-
-        }
-
-
-
-        /* ===============================
-           START DATE
-        =============================== */
+        /* =========================
+           START DATE & TIME
+        ========================= */
 
         const startDate =
-            new Date("2026-06-13T00:00:00");
+            new Date(
+                "2026-06-13T01:22:00"
+            );
 
 
 
-        /* ===============================
+        /* =========================
            LIVE COUNTER
-        =============================== */
+        ========================= */
 
         function updateCounter() {
 
-            const now = new Date();
+            const now =
+                new Date();
 
             let difference =
                 now - startDate;
 
 
             if (difference < 0) {
-
                 difference = 0;
-
             }
 
 
@@ -645,17 +532,20 @@
 
             const hours =
                 Math.floor(
-                    (totalSeconds %
-                    (60 * 60 * 24))
-                    / (60 * 60)
+                    (
+                        totalSeconds %
+                        (60 * 60 * 24)
+                    ) /
+                    (60 * 60)
                 );
 
 
             const minutes =
                 Math.floor(
-                    (totalSeconds %
-                    (60 * 60))
-                    / 60
+                    (
+                        totalSeconds %
+                        (60 * 60)
+                    ) / 60
                 );
 
 
@@ -665,31 +555,33 @@
 
             document.getElementById(
                 "days"
-            ).innerText = days;
+            ).textContent = days;
 
 
             document.getElementById(
                 "hours"
-            ).innerText =
-                String(hours).padStart(2, "0");
+            ).textContent =
+                String(hours)
+                .padStart(2, "0");
 
 
             document.getElementById(
                 "minutes"
-            ).innerText =
-                String(minutes).padStart(2, "0");
+            ).textContent =
+                String(minutes)
+                .padStart(2, "0");
 
 
             document.getElementById(
                 "seconds"
-            ).innerText =
-                String(seconds).padStart(2, "0");
+            ).textContent =
+                String(seconds)
+                .padStart(2, "0");
 
         }
 
 
         updateCounter();
-
 
         setInterval(
             updateCounter,
@@ -698,57 +590,22 @@
 
 
 
-        /* ===============================
-           PERSONAL MESSAGE
-        =============================== */
+        /* =========================
+           RANDOM LOVE MESSAGE
+        ========================= */
 
-        function showMessage() {
+        function revealMessage() {
 
-            const message =
-                document.getElementById(
-                    "personalMessage"
-                );
+            const messages = [
 
-            message.classList.toggle(
-                "hidden"
-            );
+                "I'm glad it was you.",
 
-        }
+                "And I love you. ❤️"
+
+            ];
 
 
-
-        /* ===============================
-           RANDOM MESSAGES
-        =============================== */
-
-        const messages = [
-
-            "Just checking in: I still like you a lot.",
-
-            "You crossed my mind again.",
-
-            "13 June was a pretty good day.",
-
-            "I'm glad it was you.",
-
-            "This is your reminder that you're appreciated.",
-
-            "Nothing important. Just wanted to say hi.",
-
-            "Still happy about us.",
-
-            "You make a pretty good girlfriend.",
-
-            "I hope you're having a good day.",
-
-            "That's all. Have a good one."
-
-        ];
-
-
-        function randomMessage() {
-
-            const random =
+            const randomIndex =
                 Math.floor(
                     Math.random() *
                     messages.length
@@ -756,15 +613,134 @@
 
 
             document.getElementById(
-                "randomMessage"
-            ).innerText =
-                messages[random];
+                "randomLoveMessage"
+            ).textContent =
+                messages[randomIndex];
+
+
+            document.getElementById(
+                "bottomAlert"
+            ).classList.remove(
+                "hidden"
+            );
+
+
+            createHearts(12);
 
         }
 
 
-    </script>
+        function hideMessage() {
 
+            document
+                .getElementById(
+                    "bottomAlert"
+                )
+                .classList.add(
+                    "hidden"
+                );
+
+        }
+
+
+
+        /* =========================
+           FLOATING HEARTS
+        ========================= */
+
+        const heartTypes = [
+
+            "❤️",
+            "💕",
+            "💗",
+            "💖",
+            "💓"
+
+        ];
+
+
+        function createHeart() {
+
+            const heart =
+                document.createElement(
+                    "div"
+                );
+
+
+            heart.className =
+                "floating-heart";
+
+
+            heart.innerText =
+                heartTypes[
+                    Math.floor(
+                        Math.random() *
+                        heartTypes.length
+                    )
+                ];
+
+
+            heart.style.left =
+                Math.random() *
+                100 +
+                "vw";
+
+
+            heart.style.fontSize =
+                (
+                    16 +
+                    Math.random() * 18
+                ) +
+                "px";
+
+
+            heart.style.animationDuration =
+                (
+                    3 +
+                    Math.random() * 3
+                ) +
+                "s";
+
+
+            document.body.appendChild(
+                heart
+            );
+
+
+            setTimeout(
+                () => heart.remove(),
+                6000
+            );
+
+        }
+
+
+        function createHearts(number) {
+
+            for (
+                let i = 0;
+                i < number;
+                i++
+            ) {
+
+                setTimeout(
+                    createHeart,
+                    i * 100
+                );
+
+            }
+
+        }
+
+
+        /* Continuous floating hearts */
+
+        setInterval(
+            createHeart,
+            700
+        );
+
+    </script>
 
 </body>
 </html>
