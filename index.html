@@ -1,746 +1,567 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>For my Bini Mini</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f7f7f7;
-            color: #222;
-        }
-
-        /* =========================
-           HERO
-        ========================= */
-
-        .hero {
-            background: linear-gradient(
-                135deg,
-                #ff7394,
-                #ff6f91
-            );
-
-            color: white;
-            text-align: center;
-            padding: 55px 20px;
-        }
-
-        .hero h1 {
-            font-size: clamp(34px, 6vw, 52px);
-            font-weight: 800;
-        }
-
-        /* =========================
-           FLOATING HEARTS
-        ========================= */
-
-        .floating-heart {
-            position: fixed;
-            bottom: -40px;
-
-            font-size: 22px;
-
-            pointer-events: none;
-            z-index: 5;
-
-            animation: heartPop 4s ease-out forwards;
-        }
-
-        @keyframes heartPop {
-            0% {
-                transform: translateY(0) scale(.4);
-                opacity: 0;
-            }
-
-            15% {
-                transform: translateY(-20px) scale(1);
-                opacity: 1;
-            }
-
-            70% {
-                opacity: .9;
-            }
-
-            100% {
-                transform: translateY(-100vh) scale(1.3);
-                opacity: 0;
-            }
-        }
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        .page {
-            width: min(1000px, calc(100% - 30px));
-            margin: auto;
-            padding: 45px 0 60px;
-        }
-
-        .intro {
-            text-align: center;
-            margin-bottom: 28px;
-        }
-
-        .intro h2 {
-            font-size: 25px;
-            margin-bottom: 8px;
-        }
-
-        .intro p {
-            color: #777;
-        }
-
-        /* =========================
-           COUNTER
-        ========================= */
+<!-- =========================================================
+     GALLERY — REALISTIC CLIPPED PHOTOGRAPHS
+========================================================= -->
 
-        .counter-card {
-            background: linear-gradient(
-                135deg,
-                #ff6f91,
-                #ff8fab
-            );
+<style>
 
-            color: white;
-            border-radius: 20px;
-            padding: 38px;
+/* =========================================================
+   GALLERY CONTAINER
+========================================================= */
 
-            box-shadow:
-                0 12px 35px
-                rgba(255, 105, 135, .25);
+.gallery-track{
+  align-items:start !important;
+}
 
-            text-align: center;
-        }
 
-        .counter-card h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+/* =========================================================
+   EACH PHOTO = PHYSICAL PRINT
+========================================================= */
 
-        .counter-card .since {
-            color: rgba(255,255,255,.85);
-            margin-bottom: 28px;
-            font-size: 17px;
-        }
+.gallery-card{
 
-        .counter {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
+  position:relative !important;
 
-        .time-box {
-            background: rgba(255,255,255,.18);
+  overflow:visible !important;
 
-            border:
-                1px solid
-                rgba(255,255,255,.25);
+  background:#f3efe4 !important;
 
-            border-radius: 12px;
-            padding: 22px 10px;
-        }
+  padding:12px 12px 42px 12px !important;
 
-        .time-box span {
-            display: block;
+  border:0 !important;
 
-            font-size: 34px;
-            font-weight: 700;
+  border-radius:2px !important;
 
-            margin-bottom: 5px;
-        }
+  transform:
+    rotate(-2deg);
 
-        .time-box small {
-            color: rgba(255,255,255,.85);
-            font-size: 14px;
-        }
+  transform-origin:
+    50% -10px;
 
-        /* =========================
-           BOTTOM BUTTON
-        ========================= */
+  box-shadow:
 
-        .reveal-section {
-            text-align: center;
-            padding: 28px 0 5px;
-        }
+    0 3px 5px rgba(0,0,0,.12),
 
-        .reveal-button {
-            border: none;
-            border-radius: 10px;
+    0 12px 20px rgba(0,0,0,.16),
 
-            padding: 13px 22px;
+    0 25px 40px rgba(0,0,0,.12);
 
-            background: #ff7394;
-            color: white;
+  transition:
 
-            cursor: pointer;
-            font-size: 14px;
+    transform .65s
+    cubic-bezier(.16,1,.3,1),
 
-            transition: .2s;
-        }
+    box-shadow .5s ease;
 
-        .reveal-button:hover {
-            transform: translateY(-2px);
-            background: #f45f83;
-        }
+  will-change:transform;
 
-        /* =========================
-           RANDOM MESSAGE
-        ========================= */
+  z-index:2 !important;
+}
 
-        .bottom-alert {
-            width: min(500px, 100%);
 
-            margin: 22px auto 0;
+/* =========================================================
+   DIFFERENT NATURAL ROTATIONS
+========================================================= */
 
-            padding: 30px 24px;
+.gallery-card:nth-child(1){
 
-            background: white;
+  transform:
+    rotate(-3deg);
 
-            border-radius: 18px;
+}
 
-            box-shadow:
-                0 12px 35px
-                rgba(255,105,135,.18);
+.gallery-card:nth-child(2){
 
-            border:
-                1px solid
-                #ffd6df;
+  transform:
+    rotate(2.5deg);
 
-            animation: popupIn .35s ease;
-        }
+}
 
-        .bottom-alert h2 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
+.gallery-card:nth-child(3){
 
-        .from-safal {
-            margin-top: 16px;
+  transform:
+    rotate(-1.5deg);
 
-            color: #888 !important;
-            font-size: 14px !important;
-        }
+}
 
-        .close-alert {
-            margin-top: 18px;
+.gallery-card:nth-child(4){
 
-            border: none;
-            border-radius: 8px;
+  transform:
+    rotate(3deg);
 
-            padding: 9px 18px;
+}
 
-            background: #222;
-            color: white;
 
-            cursor: pointer;
-        }
+/* =========================================================
+   IMAGE
+========================================================= */
 
-        .hidden {
-            display: none;
-        }
+.gallery-card img{
 
-        @keyframes popupIn {
-            from {
-                opacity: 0;
+  display:block !important;
 
-                transform:
-                    translateY(18px)
-                    scale(.96);
-            }
+  width:100% !important;
 
-            to {
-                opacity: 1;
+  height:100% !important;
 
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
-        }
+  object-fit:cover !important;
 
-        /* =========================
-           FOOTER
-        ========================= */
+  border:1px solid rgba(0,0,0,.12);
 
-        footer {
-            text-align: center;
+  transform:
+    translateZ(8px);
 
-            color: #999;
+  filter:
+    contrast(1.03)
+    saturate(.95);
 
-            padding: 35px 0 0;
+  transition:
 
-            font-size: 14px;
-        }
+    transform .6s
+    cubic-bezier(.16,1,.3,1),
 
-        /* =========================
-           MOBILE
-        ========================= */
+    filter .5s ease;
 
-        @media (max-width: 650px) {
+}
 
-            .hero {
-                padding: 45px 20px;
-            }
 
-            .counter-card {
-                padding: 25px 15px;
-            }
+/* =========================================================
+   METAL CLIP
+========================================================= */
 
-            .counter-card h2 {
-                font-size: 23px;
-            }
+.gallery-card::before{
 
-            .counter {
-                grid-template-columns: repeat(2, 1fr);
-            }
+  content:"";
 
-            .time-box span {
-                font-size: 29px;
-            }
-        }
+  position:absolute;
 
-    </style>
-</head>
+  top:-23px;
 
+  left:50%;
 
-<body>
+  width:48px;
 
+  height:36px;
 
-    <!-- =========================
-         TOP
-    ========================= -->
+  transform:
+    translateX(-50%)
+    rotate(1deg);
 
-    <section class="hero">
+  z-index:20;
 
-        <h1>
-            For my Bini Mini.
-        </h1>
+  background:
 
-    </section>
+    linear-gradient(
+      90deg,
 
+      #555 0%,
 
+      #aaa 15%,
 
-    <main class="page">
+      #f1f1f1 30%,
 
+      #777 47%,
 
-        <!-- =========================
-             INTRO
-        ========================= -->
+      #eee 62%,
 
-        <div class="intro">
+      #666 82%,
 
-            <h2>
-                Since 13 June 2026.
-            </h2>
+      #444 100%
+    );
 
-            <p>
-                A small reminder of how long
-                we've been together.
-            </p>
+  border-radius:
+    5px
+    5px
+    10px
+    10px;
 
-        </div>
+  box-shadow:
 
+    0 3px 5px rgba(0,0,0,.3),
 
+    inset 0 2px 2px
+      rgba(255,255,255,.8),
 
-        <!-- =========================
-             RELATIONSHIP COUNTER
-        ========================= -->
+    inset 0 -2px 3px
+      rgba(0,0,0,.25);
 
-        <section class="counter-card">
+}
 
-            <h2>
-                We've been together for
-            </h2>
 
-            <p class="since">
-                13 June 2026 · 1:22 AM
-            </p>
+/* =========================================================
+   CLIP HOLE
+========================================================= */
 
+.gallery-card::after{
 
-            <div class="counter">
+  content:"";
 
-                <div class="time-box">
+  position:absolute;
 
-                    <span id="days">
-                        0
-                    </span>
+  top:-14px;
 
-                    <small>
-                        Days
-                    </small>
+  left:50%;
 
-                </div>
+  width:11px;
 
+  height:11px;
 
-                <div class="time-box">
+  transform:
+    translateX(-50%);
 
-                    <span id="hours">
-                        00
-                    </span>
+  z-index:30;
 
-                    <small>
-                        Hours
-                    </small>
+  border-radius:50%;
 
-                </div>
+  background:#222;
 
+  box-shadow:
 
-                <div class="time-box">
+    inset 0 2px 3px
+      rgba(0,0,0,.8);
 
-                    <span id="minutes">
-                        00
-                    </span>
+}
 
-                    <small>
-                        Minutes
-                    </small>
 
-                </div>
+/* =========================================================
+   SMALL HANGING STRING
+========================================================= */
 
+.gallery-card .clip-string{
 
-                <div class="time-box">
+  position:absolute;
 
-                    <span id="seconds">
-                        00
-                    </span>
+  top:-55px;
 
-                    <small>
-                        Seconds
-                    </small>
+  left:50%;
 
-                </div>
+  width:2px;
 
-            </div>
+  height:35px;
 
-        </section>
+  transform:
+    translateX(-50%);
 
+  background:
 
+    linear-gradient(
+      90deg,
+      #555,
+      #ddd,
+      #555
+    );
 
-        <!-- =========================
-             BOTTOM REVEAL
-        ========================= -->
+  z-index:10;
 
-        <section class="reveal-section">
+}
 
-            <button
-                class="reveal-button"
-                onclick="revealMessage()"
-            >
-                Press this when you reach the bottom
-            </button>
 
+/* =========================================================
+   ADD STRING AUTOMATICALLY
+========================================================= */
 
-            <div
-                id="bottomAlert"
-                class="bottom-alert hidden"
-            >
+.gallery-card > img{
 
-                <h2 id="randomLoveMessage">
-                    I'm glad it was you.
-                </h2>
+  position:relative;
 
-                <p class="from-safal">
-                    — From Safal
-                </p>
+}
 
 
-                <button
-                    class="close-alert"
-                    onclick="hideMessage()"
-                >
-                    Close
-                </button>
+/* =========================================================
+   HOVER
+========================================================= */
 
-            </div>
+.gallery-card:hover{
 
-        </section>
+  z-index:50 !important;
 
+  transform:
+    translateY(-12px)
+    rotate(0deg)
+    scale(1.035) !important;
 
+  box-shadow:
 
-        <!-- =========================
-             FOOTER
-        ========================= -->
+    0 8px 12px rgba(0,0,0,.12),
 
-        <footer>
+    0 22px 40px rgba(0,0,0,.25),
 
-            13.06.2026 — made for Bini ❤️
+    0 45px 70px rgba(0,0,0,.18);
 
-        </footer>
+}
 
 
-    </main>
+.gallery-card:hover img{
 
+  transform:
+    scale(1.025);
 
+  filter:
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
+    contrast(1.07)
+    saturate(1.03);
 
-    <script>
+}
 
-        /* =========================
-           START DATE & TIME
-        ========================= */
 
-        const startDate =
-            new Date(
-                "2026-06-13T01:22:00"
-            );
+/* =========================================================
+   IDLE SWING
+========================================================= */
 
+@keyframes galleryHang1{
 
+  0%,100%{
+    transform:rotate(-3deg);
+  }
 
-        /* =========================
-           LIVE COUNTER
-        ========================= */
+  50%{
+    transform:rotate(-1deg);
+  }
 
-        function updateCounter() {
+}
 
-            const now =
-                new Date();
+@keyframes galleryHang2{
 
-            let difference =
-                now - startDate;
+  0%,100%{
+    transform:rotate(2.5deg);
+  }
 
+  50%{
+    transform:rotate(1deg);
+  }
 
-            if (difference < 0) {
-                difference = 0;
-            }
+}
 
+@keyframes galleryHang3{
 
-            const totalSeconds =
-                Math.floor(
-                    difference / 1000
-                );
+  0%,100%{
+    transform:rotate(-1.5deg);
+  }
 
+  50%{
+    transform:rotate(1deg);
+  }
 
-            const days =
-                Math.floor(
-                    totalSeconds /
-                    (60 * 60 * 24)
-                );
+}
 
+@keyframes galleryHang4{
 
-            const hours =
-                Math.floor(
-                    (
-                        totalSeconds %
-                        (60 * 60 * 24)
-                    ) /
-                    (60 * 60)
-                );
+  0%,100%{
+    transform:rotate(3deg);
+  }
 
+  50%{
+    transform:rotate(1deg);
+  }
 
-            const minutes =
-                Math.floor(
-                    (
-                        totalSeconds %
-                        (60 * 60)
-                    ) / 60
-                );
+}
 
 
-            const seconds =
-                totalSeconds % 60;
+/* Apply gentle movement */
 
+.gallery-card:nth-child(1){
+  animation:
+    galleryHang1
+    7s
+    ease-in-out
+    infinite;
+}
 
-            document.getElementById(
-                "days"
-            ).textContent = days;
+.gallery-card:nth-child(2){
+  animation:
+    galleryHang2
+    8s
+    ease-in-out
+    infinite;
+}
 
+.gallery-card:nth-child(3){
+  animation:
+    galleryHang3
+    6.5s
+    ease-in-out
+    infinite;
+}
 
-            document.getElementById(
-                "hours"
-            ).textContent =
-                String(hours)
-                .padStart(2, "0");
+.gallery-card:nth-child(4){
+  animation:
+    galleryHang4
+    7.5s
+    ease-in-out
+    infinite;
+}
 
 
-            document.getElementById(
-                "minutes"
-            ).textContent =
-                String(minutes)
-                .padStart(2, "0");
+/* Stop swinging when hovered */
 
+.gallery-card:hover{
 
-            document.getElementById(
-                "seconds"
-            ).textContent =
-                String(seconds)
-                .padStart(2, "0");
+  animation-play-state:
+    paused;
 
-        }
+}
 
 
-        updateCounter();
+/* =========================================================
+   MOBILE
+========================================================= */
 
-        setInterval(
-            updateCounter,
-            1000
-        );
+@media(max-width:900px){
 
+  .gallery-card{
 
+    padding:
+      9px
+      9px
+      32px
+      9px !important;
 
-        /* =========================
-           RANDOM LOVE MESSAGE
-        ========================= */
+  }
 
-        function revealMessage() {
+  .gallery-card::before{
 
-            const messages = [
+    width:42px;
 
-                "I'm glad it was you.",
+    height:32px;
 
-                "And I love you. ❤️"
+    top:-20px;
 
-            ];
+  }
 
+}
 
-            const randomIndex =
-                Math.floor(
-                    Math.random() *
-                    messages.length
-                );
+@media(max-width:560px){
 
+  .gallery-card{
 
-            document.getElementById(
-                "randomLoveMessage"
-            ).textContent =
-                messages[randomIndex];
+    width:90% !important;
 
+    margin:
+      30px auto !important;
 
-            document.getElementById(
-                "bottomAlert"
-            ).classList.remove(
-                "hidden"
-            );
+  }
 
+}
 
-            createHearts(12);
 
-        }
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
+@media(prefers-reduced-motion:reduce){
 
-        function hideMessage() {
+  .gallery-card{
 
-            document
-                .getElementById(
-                    "bottomAlert"
-                )
-                .classList.add(
-                    "hidden"
-                );
+    animation:none !important;
 
-        }
+    transition:none !important;
 
+  }
 
+}
 
-        /* =========================
-           FLOATING HEARTS
-        ========================= */
+</style>
 
-        const heartTypes = [
 
-            "❤️",
-            "💕",
-            "💗",
-            "💖",
-            "💓"
+<script>
 
-        ];
+/* =========================================================
+   GALLERY — MOUSE PHYSICS
+========================================================= */
 
+document.querySelectorAll(
+  ".gallery-card"
+).forEach((card) => {
 
-        function createHeart() {
+  card.addEventListener(
+    "mousemove",
+    (event) => {
 
-            const heart =
-                document.createElement(
-                    "div"
-                );
+      const rect =
+        card.getBoundingClientRect();
 
+      const x =
+        (
+          event.clientX -
+          rect.left
+        )
+        /
+        rect.width
+        -
+        .5;
 
-            heart.className =
-                "floating-heart";
+      const y =
+        (
+          event.clientY -
+          rect.top
+        )
+        /
+        rect.height
+        -
+        .5;
 
 
-            heart.innerText =
-                heartTypes[
-                    Math.floor(
-                        Math.random() *
-                        heartTypes.length
-                    )
-                ];
+      const moveX =
+        x * 10;
 
+      const moveY =
+        y * 7;
 
-            heart.style.left =
-                Math.random() *
-                100 +
-                "vw";
+      const rotate =
+        x * 5;
 
 
-            heart.style.fontSize =
-                (
-                    16 +
-                    Math.random() * 18
-                ) +
-                "px";
+      card.style.transform = `
+        translate(
+          ${moveX}px,
+          ${moveY - 8}px
+        )
+        rotate(
+          ${rotate}deg
+        )
+        scale(1.035)
+      `;
 
 
-            heart.style.animationDuration =
-                (
-                    3 +
-                    Math.random() * 3
-                ) +
-                "s";
+      /* subtle 3D image movement */
 
+      const image =
+        card.querySelector("img");
 
-            document.body.appendChild(
-                heart
-            );
+      if(image){
 
+        image.style.transform = `
+          translate(
+            ${x * 4}px,
+            ${y * 4}px
+          )
+          scale(1.025)
+        `;
 
-            setTimeout(
-                () => heart.remove(),
-                6000
-            );
+      }
 
-        }
+    }
+  );
 
 
-        function createHearts(number) {
+  card.addEventListener(
+    "mouseleave",
+    () => {
 
-            for (
-                let i = 0;
-                i < number;
-                i++
-            ) {
+      card.style.transform = "";
 
-                setTimeout(
-                    createHeart,
-                    i * 100
-                );
+      const image =
+        card.querySelector("img");
 
-            }
+      if(image){
 
-        }
+        image.style.transform = "";
 
+      }
 
-        /* Continuous floating hearts */
+    }
+  );
 
-        setInterval(
-            createHeart,
-            700
-        );
+});
 
-    </script>
 
-</body>
-</html>
+</script>
