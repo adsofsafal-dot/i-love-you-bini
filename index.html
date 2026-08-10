@@ -1,567 +1,746 @@
-<!-- =========================================================
-     GALLERY — REALISTIC CLIPPED PHOTOGRAPHS
-========================================================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>For my Bini Mini</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            background: linear-gradient(
+                135deg,
+                #ff7394,
+                #ff6f91
+            );
+
+            color: white;
+            text-align: center;
+            padding: 55px 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 6vw, 52px);
+            font-weight: 800;
+        }
+
+        /* =========================
+           FLOATING HEARTS
+        ========================= */
+
+        .floating-heart {
+            position: fixed;
+            bottom: -40px;
+
+            font-size: 22px;
+
+            pointer-events: none;
+            z-index: 5;
+
+            animation: heartPop 4s ease-out forwards;
+        }
+
+        @keyframes heartPop {
+            0% {
+                transform: translateY(0) scale(.4);
+                opacity: 0;
+            }
+
+            15% {
+                transform: translateY(-20px) scale(1);
+                opacity: 1;
+            }
+
+            70% {
+                opacity: .9;
+            }
+
+            100% {
+                transform: translateY(-100vh) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .page {
+            width: min(1000px, calc(100% - 30px));
+            margin: auto;
+            padding: 45px 0 60px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .intro h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .intro p {
+            color: #777;
+        }
+
+        /* =========================
+           COUNTER
+        ========================= */
 
-<style>
+        .counter-card {
+            background: linear-gradient(
+                135deg,
+                #ff6f91,
+                #ff8fab
+            );
 
-/* =========================================================
-   GALLERY CONTAINER
-========================================================= */
+            color: white;
+            border-radius: 20px;
+            padding: 38px;
 
-.gallery-track{
-  align-items:start !important;
-}
+            box-shadow:
+                0 12px 35px
+                rgba(255, 105, 135, .25);
 
+            text-align: center;
+        }
 
-/* =========================================================
-   EACH PHOTO = PHYSICAL PRINT
-========================================================= */
+        .counter-card h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
 
-.gallery-card{
+        .counter-card .since {
+            color: rgba(255,255,255,.85);
+            margin-bottom: 28px;
+            font-size: 17px;
+        }
 
-  position:relative !important;
+        .counter {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
 
-  overflow:visible !important;
+        .time-box {
+            background: rgba(255,255,255,.18);
 
-  background:#f3efe4 !important;
+            border:
+                1px solid
+                rgba(255,255,255,.25);
 
-  padding:12px 12px 42px 12px !important;
+            border-radius: 12px;
+            padding: 22px 10px;
+        }
 
-  border:0 !important;
+        .time-box span {
+            display: block;
 
-  border-radius:2px !important;
+            font-size: 34px;
+            font-weight: 700;
 
-  transform:
-    rotate(-2deg);
+            margin-bottom: 5px;
+        }
 
-  transform-origin:
-    50% -10px;
+        .time-box small {
+            color: rgba(255,255,255,.85);
+            font-size: 14px;
+        }
 
-  box-shadow:
+        /* =========================
+           BOTTOM BUTTON
+        ========================= */
 
-    0 3px 5px rgba(0,0,0,.12),
+        .reveal-section {
+            text-align: center;
+            padding: 28px 0 5px;
+        }
 
-    0 12px 20px rgba(0,0,0,.16),
+        .reveal-button {
+            border: none;
+            border-radius: 10px;
 
-    0 25px 40px rgba(0,0,0,.12);
+            padding: 13px 22px;
 
-  transition:
+            background: #ff7394;
+            color: white;
 
-    transform .65s
-    cubic-bezier(.16,1,.3,1),
+            cursor: pointer;
+            font-size: 14px;
 
-    box-shadow .5s ease;
+            transition: .2s;
+        }
 
-  will-change:transform;
+        .reveal-button:hover {
+            transform: translateY(-2px);
+            background: #f45f83;
+        }
 
-  z-index:2 !important;
-}
+        /* =========================
+           RANDOM MESSAGE
+        ========================= */
 
+        .bottom-alert {
+            width: min(500px, 100%);
 
-/* =========================================================
-   DIFFERENT NATURAL ROTATIONS
-========================================================= */
+            margin: 22px auto 0;
 
-.gallery-card:nth-child(1){
+            padding: 30px 24px;
 
-  transform:
-    rotate(-3deg);
+            background: white;
 
-}
+            border-radius: 18px;
 
-.gallery-card:nth-child(2){
+            box-shadow:
+                0 12px 35px
+                rgba(255,105,135,.18);
 
-  transform:
-    rotate(2.5deg);
+            border:
+                1px solid
+                #ffd6df;
 
-}
+            animation: popupIn .35s ease;
+        }
 
-.gallery-card:nth-child(3){
+        .bottom-alert h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
 
-  transform:
-    rotate(-1.5deg);
+        .from-safal {
+            margin-top: 16px;
 
-}
+            color: #888 !important;
+            font-size: 14px !important;
+        }
 
-.gallery-card:nth-child(4){
+        .close-alert {
+            margin-top: 18px;
 
-  transform:
-    rotate(3deg);
+            border: none;
+            border-radius: 8px;
 
-}
+            padding: 9px 18px;
 
+            background: #222;
+            color: white;
 
-/* =========================================================
-   IMAGE
-========================================================= */
+            cursor: pointer;
+        }
 
-.gallery-card img{
+        .hidden {
+            display: none;
+        }
 
-  display:block !important;
+        @keyframes popupIn {
+            from {
+                opacity: 0;
 
-  width:100% !important;
+                transform:
+                    translateY(18px)
+                    scale(.96);
+            }
 
-  height:100% !important;
+            to {
+                opacity: 1;
 
-  object-fit:cover !important;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
 
-  border:1px solid rgba(0,0,0,.12);
+        /* =========================
+           FOOTER
+        ========================= */
 
-  transform:
-    translateZ(8px);
+        footer {
+            text-align: center;
 
-  filter:
-    contrast(1.03)
-    saturate(.95);
+            color: #999;
 
-  transition:
+            padding: 35px 0 0;
 
-    transform .6s
-    cubic-bezier(.16,1,.3,1),
+            font-size: 14px;
+        }
 
-    filter .5s ease;
+        /* =========================
+           MOBILE
+        ========================= */
 
-}
+        @media (max-width: 650px) {
 
+            .hero {
+                padding: 45px 20px;
+            }
 
-/* =========================================================
-   METAL CLIP
-========================================================= */
+            .counter-card {
+                padding: 25px 15px;
+            }
 
-.gallery-card::before{
+            .counter-card h2 {
+                font-size: 23px;
+            }
 
-  content:"";
+            .counter {
+                grid-template-columns: repeat(2, 1fr);
+            }
 
-  position:absolute;
+            .time-box span {
+                font-size: 29px;
+            }
+        }
 
-  top:-23px;
+    </style>
+</head>
 
-  left:50%;
 
-  width:48px;
+<body>
 
-  height:36px;
 
-  transform:
-    translateX(-50%)
-    rotate(1deg);
+    <!-- =========================
+         TOP
+    ========================= -->
 
-  z-index:20;
+    <section class="hero">
 
-  background:
+        <h1>
+            For my Bini Mini.
+        </h1>
 
-    linear-gradient(
-      90deg,
+    </section>
 
-      #555 0%,
 
-      #aaa 15%,
 
-      #f1f1f1 30%,
+    <main class="page">
 
-      #777 47%,
 
-      #eee 62%,
+        <!-- =========================
+             INTRO
+        ========================= -->
 
-      #666 82%,
+        <div class="intro">
 
-      #444 100%
-    );
+            <h2>
+                Since 13 June 2026.
+            </h2>
 
-  border-radius:
-    5px
-    5px
-    10px
-    10px;
+            <p>
+                A small reminder of how long
+                we've been together.
+            </p>
 
-  box-shadow:
+        </div>
 
-    0 3px 5px rgba(0,0,0,.3),
 
-    inset 0 2px 2px
-      rgba(255,255,255,.8),
 
-    inset 0 -2px 3px
-      rgba(0,0,0,.25);
+        <!-- =========================
+             RELATIONSHIP COUNTER
+        ========================= -->
 
-}
+        <section class="counter-card">
 
+            <h2>
+                We've been together for
+            </h2>
 
-/* =========================================================
-   CLIP HOLE
-========================================================= */
+            <p class="since">
+                13 June 2026 · 1:22 AM
+            </p>
 
-.gallery-card::after{
 
-  content:"";
+            <div class="counter">
 
-  position:absolute;
+                <div class="time-box">
 
-  top:-14px;
+                    <span id="days">
+                        0
+                    </span>
 
-  left:50%;
+                    <small>
+                        Days
+                    </small>
 
-  width:11px;
+                </div>
 
-  height:11px;
 
-  transform:
-    translateX(-50%);
+                <div class="time-box">
 
-  z-index:30;
+                    <span id="hours">
+                        00
+                    </span>
 
-  border-radius:50%;
+                    <small>
+                        Hours
+                    </small>
 
-  background:#222;
+                </div>
 
-  box-shadow:
 
-    inset 0 2px 3px
-      rgba(0,0,0,.8);
+                <div class="time-box">
 
-}
+                    <span id="minutes">
+                        00
+                    </span>
 
+                    <small>
+                        Minutes
+                    </small>
 
-/* =========================================================
-   SMALL HANGING STRING
-========================================================= */
+                </div>
 
-.gallery-card .clip-string{
 
-  position:absolute;
+                <div class="time-box">
 
-  top:-55px;
+                    <span id="seconds">
+                        00
+                    </span>
 
-  left:50%;
+                    <small>
+                        Seconds
+                    </small>
 
-  width:2px;
+                </div>
 
-  height:35px;
+            </div>
 
-  transform:
-    translateX(-50%);
+        </section>
 
-  background:
 
-    linear-gradient(
-      90deg,
-      #555,
-      #ddd,
-      #555
-    );
 
-  z-index:10;
+        <!-- =========================
+             BOTTOM REVEAL
+        ========================= -->
 
-}
+        <section class="reveal-section">
 
+            <button
+                class="reveal-button"
+                onclick="revealMessage()"
+            >
+                Press this when you reach the bottom
+            </button>
 
-/* =========================================================
-   ADD STRING AUTOMATICALLY
-========================================================= */
 
-.gallery-card > img{
+            <div
+                id="bottomAlert"
+                class="bottom-alert hidden"
+            >
 
-  position:relative;
+                <h2 id="randomLoveMessage">
+                    I'm glad it was you.
+                </h2>
 
-}
+                <p class="from-safal">
+                    — From Safal
+                </p>
 
 
-/* =========================================================
-   HOVER
-========================================================= */
+                <button
+                    class="close-alert"
+                    onclick="hideMessage()"
+                >
+                    Close
+                </button>
 
-.gallery-card:hover{
+            </div>
 
-  z-index:50 !important;
+        </section>
 
-  transform:
-    translateY(-12px)
-    rotate(0deg)
-    scale(1.035) !important;
 
-  box-shadow:
 
-    0 8px 12px rgba(0,0,0,.12),
+        <!-- =========================
+             FOOTER
+        ========================= -->
 
-    0 22px 40px rgba(0,0,0,.25),
+        <footer>
 
-    0 45px 70px rgba(0,0,0,.18);
+            13.06.2026 — made for Bini ❤️
 
-}
+        </footer>
 
 
-.gallery-card:hover img{
+    </main>
 
-  transform:
-    scale(1.025);
 
-  filter:
 
-    contrast(1.07)
-    saturate(1.03);
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
-}
+    <script>
 
+        /* =========================
+           START DATE & TIME
+        ========================= */
 
-/* =========================================================
-   IDLE SWING
-========================================================= */
+        const startDate =
+            new Date(
+                "2026-06-13T01:22:00"
+            );
 
-@keyframes galleryHang1{
 
-  0%,100%{
-    transform:rotate(-3deg);
-  }
 
-  50%{
-    transform:rotate(-1deg);
-  }
+        /* =========================
+           LIVE COUNTER
+        ========================= */
 
-}
+        function updateCounter() {
 
-@keyframes galleryHang2{
+            const now =
+                new Date();
 
-  0%,100%{
-    transform:rotate(2.5deg);
-  }
+            let difference =
+                now - startDate;
 
-  50%{
-    transform:rotate(1deg);
-  }
 
-}
+            if (difference < 0) {
+                difference = 0;
+            }
 
-@keyframes galleryHang3{
 
-  0%,100%{
-    transform:rotate(-1.5deg);
-  }
+            const totalSeconds =
+                Math.floor(
+                    difference / 1000
+                );
 
-  50%{
-    transform:rotate(1deg);
-  }
 
-}
+            const days =
+                Math.floor(
+                    totalSeconds /
+                    (60 * 60 * 24)
+                );
 
-@keyframes galleryHang4{
 
-  0%,100%{
-    transform:rotate(3deg);
-  }
+            const hours =
+                Math.floor(
+                    (
+                        totalSeconds %
+                        (60 * 60 * 24)
+                    ) /
+                    (60 * 60)
+                );
 
-  50%{
-    transform:rotate(1deg);
-  }
 
-}
+            const minutes =
+                Math.floor(
+                    (
+                        totalSeconds %
+                        (60 * 60)
+                    ) / 60
+                );
 
 
-/* Apply gentle movement */
+            const seconds =
+                totalSeconds % 60;
 
-.gallery-card:nth-child(1){
-  animation:
-    galleryHang1
-    7s
-    ease-in-out
-    infinite;
-}
 
-.gallery-card:nth-child(2){
-  animation:
-    galleryHang2
-    8s
-    ease-in-out
-    infinite;
-}
+            document.getElementById(
+                "days"
+            ).textContent = days;
 
-.gallery-card:nth-child(3){
-  animation:
-    galleryHang3
-    6.5s
-    ease-in-out
-    infinite;
-}
 
-.gallery-card:nth-child(4){
-  animation:
-    galleryHang4
-    7.5s
-    ease-in-out
-    infinite;
-}
+            document.getElementById(
+                "hours"
+            ).textContent =
+                String(hours)
+                .padStart(2, "0");
 
 
-/* Stop swinging when hovered */
+            document.getElementById(
+                "minutes"
+            ).textContent =
+                String(minutes)
+                .padStart(2, "0");
 
-.gallery-card:hover{
 
-  animation-play-state:
-    paused;
+            document.getElementById(
+                "seconds"
+            ).textContent =
+                String(seconds)
+                .padStart(2, "0");
 
-}
+        }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
+        updateCounter();
 
-@media(max-width:900px){
+        setInterval(
+            updateCounter,
+            1000
+        );
 
-  .gallery-card{
 
-    padding:
-      9px
-      9px
-      32px
-      9px !important;
 
-  }
+        /* =========================
+           RANDOM LOVE MESSAGE
+        ========================= */
 
-  .gallery-card::before{
+        function revealMessage() {
 
-    width:42px;
+            const messages = [
 
-    height:32px;
+                "I'm glad it was you.",
 
-    top:-20px;
+                "And I love you. ❤️"
 
-  }
+            ];
 
-}
 
-@media(max-width:560px){
+            const randomIndex =
+                Math.floor(
+                    Math.random() *
+                    messages.length
+                );
 
-  .gallery-card{
 
-    width:90% !important;
+            document.getElementById(
+                "randomLoveMessage"
+            ).textContent =
+                messages[randomIndex];
 
-    margin:
-      30px auto !important;
 
-  }
+            document.getElementById(
+                "bottomAlert"
+            ).classList.remove(
+                "hidden"
+            );
 
-}
 
+            createHearts(12);
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+        }
 
-@media(prefers-reduced-motion:reduce){
 
-  .gallery-card{
+        function hideMessage() {
 
-    animation:none !important;
+            document
+                .getElementById(
+                    "bottomAlert"
+                )
+                .classList.add(
+                    "hidden"
+                );
 
-    transition:none !important;
+        }
 
-  }
 
-}
 
-</style>
+        /* =========================
+           FLOATING HEARTS
+        ========================= */
 
+        const heartTypes = [
 
-<script>
+            "❤️",
+            "💕",
+            "💗",
+            "💖",
+            "💓"
 
-/* =========================================================
-   GALLERY — MOUSE PHYSICS
-========================================================= */
+        ];
 
-document.querySelectorAll(
-  ".gallery-card"
-).forEach((card) => {
 
-  card.addEventListener(
-    "mousemove",
-    (event) => {
+        function createHeart() {
 
-      const rect =
-        card.getBoundingClientRect();
+            const heart =
+                document.createElement(
+                    "div"
+                );
 
-      const x =
-        (
-          event.clientX -
-          rect.left
-        )
-        /
-        rect.width
-        -
-        .5;
 
-      const y =
-        (
-          event.clientY -
-          rect.top
-        )
-        /
-        rect.height
-        -
-        .5;
+            heart.className =
+                "floating-heart";
 
 
-      const moveX =
-        x * 10;
+            heart.innerText =
+                heartTypes[
+                    Math.floor(
+                        Math.random() *
+                        heartTypes.length
+                    )
+                ];
 
-      const moveY =
-        y * 7;
 
-      const rotate =
-        x * 5;
+            heart.style.left =
+                Math.random() *
+                100 +
+                "vw";
 
 
-      card.style.transform = `
-        translate(
-          ${moveX}px,
-          ${moveY - 8}px
-        )
-        rotate(
-          ${rotate}deg
-        )
-        scale(1.035)
-      `;
+            heart.style.fontSize =
+                (
+                    16 +
+                    Math.random() * 18
+                ) +
+                "px";
 
 
-      /* subtle 3D image movement */
+            heart.style.animationDuration =
+                (
+                    3 +
+                    Math.random() * 3
+                ) +
+                "s";
 
-      const image =
-        card.querySelector("img");
 
-      if(image){
+            document.body.appendChild(
+                heart
+            );
 
-        image.style.transform = `
-          translate(
-            ${x * 4}px,
-            ${y * 4}px
-          )
-          scale(1.025)
-        `;
 
-      }
+            setTimeout(
+                () => heart.remove(),
+                6000
+            );
 
-    }
-  );
+        }
 
 
-  card.addEventListener(
-    "mouseleave",
-    () => {
+        function createHearts(number) {
 
-      card.style.transform = "";
+            for (
+                let i = 0;
+                i < number;
+                i++
+            ) {
 
-      const image =
-        card.querySelector("img");
+                setTimeout(
+                    createHeart,
+                    i * 100
+                );
 
-      if(image){
+            }
 
-        image.style.transform = "";
+        }
 
-      }
 
-    }
-  );
+        /* Continuous floating hearts */
 
-});
+        setInterval(
+            createHeart,
+            700
+        );
 
+    </script>
 
-</script>
+</body>
+</html>
