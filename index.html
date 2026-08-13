@@ -1,95 +1,990 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>A Little Surprise 💧</title>
+<title>A Little Surprise 💧</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<style>
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #09202d;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255,255,255,.9), transparent 25%),
+    radial-gradient(circle at 85% 80%, rgba(86,210,255,.25), transparent 30%),
+    linear-gradient(135deg, #d9f7ff 0%, #f8fdff 45%, #ccefff 100%);
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(5px);
+  opacity: .45;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+
+.blob.one {
+  width: 250px;
+  height: 250px;
+  background: rgba(60, 191, 240, .25);
+  left: -80px;
+  top: 10%;
+}
+
+.blob.two {
+  width: 350px;
+  height: 350px;
+  background: rgba(120, 225, 255, .22);
+  right: -120px;
+  bottom: -80px;
+  animation-delay: -4s;
+}
+
+.blob.three {
+  width: 150px;
+  height: 150px;
+  background: rgba(255,255,255,.7);
+  right: 20%;
+  top: 10%;
+  animation-delay: -7s;
+}
+
+
+/* =========================================================
+   GRAIN
+========================================================= */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .055;
+  z-index: 10;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   FLOATING DROPS
+========================================================= */
+
+.drop-particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,.55);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255,255,255,.8);
+  animation: particleFloat linear infinite;
+}
+
+.drop-particle:nth-child(1) {
+  left: 10%;
+  bottom: -20px;
+  animation-duration: 9s;
+}
+
+.drop-particle:nth-child(2) {
+  left: 25%;
+  bottom: -20px;
+  animation-duration: 13s;
+  animation-delay: 2s;
+}
+
+.drop-particle:nth-child(3) {
+  left: 65%;
+  bottom: -20px;
+  animation-duration: 11s;
+  animation-delay: 1s;
+}
+
+.drop-particle:nth-child(4) {
+  left: 82%;
+  bottom: -20px;
+  animation-duration: 15s;
+  animation-delay: 4s;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+
+/* =========================================================
+   READYMAG STYLE CARD
+========================================================= */
+
+.card {
+  width: min(92vw, 560px);
+  position: relative;
+  padding: 65px 48px 50px;
+
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.75);
+
+  border-radius: 38px;
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 30px 100px rgba(0,75,110,.15),
+    inset 0 1px 0 rgba(255,255,255,.8);
+
+  text-align: center;
+
+  transform:
+    perspective(1000px)
+    rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg));
+
+  transition:
+    transform .15s ease,
+    box-shadow .4s ease;
+
+  animation: cardEnter 1s cubic-bezier(.16,1,.3,1);
+}
+
+.card:hover {
+  box-shadow:
+    0 40px 120px rgba(0,90,130,.22),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+
+/* =========================================================
+   TOP LABEL
+========================================================= */
+
+.label {
+  position: absolute;
+  top: 22px;
+  left: 25px;
+
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  color: rgba(9,32,45,.55);
+}
+
+
+/* =========================================================
+   WATER DROP
+========================================================= */
+
+.drop {
+  position: relative;
+  display: inline-flex;
+
+  width: 105px;
+  height: 125px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 25px;
+
+  font-size: 65px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.85),
+      rgba(126,218,250,.35)
+    );
+
+  border-radius: 70% 70% 65% 65% / 55% 55% 85% 85%;
+
+  transform: rotate(45deg);
+
+  box-shadow:
+    inset -12px -12px 30px rgba(24,145,190,.10),
+    inset 10px 10px 25px rgba(255,255,255,.9),
+    0 20px 40px rgba(15,150,210,.18);
+
+  animation:
+    floatDrop 3s ease-in-out infinite;
+}
+
+.drop span {
+  transform: rotate(-45deg);
+  display: block;
+}
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #1595ca;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: clamp(38px, 8vw, 58px);
+  line-height: .95;
+  letter-spacing: -3px;
+  margin-bottom: 22px;
+  font-weight: 800;
+}
+
+.description {
+  max-width: 410px;
+  margin: auto;
+
+  font-size: 16px;
+  line-height: 1.7;
+
+  color: #607783;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.continue-btn {
+  position: relative;
+
+  margin-top: 32px;
+
+  border: 0;
+  outline: 0;
+
+  padding: 17px 32px;
+
+  border-radius: 100px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #16a8e7,
+      #087fc0
+    );
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 30px rgba(18,150,220,.25);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.continue-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+
+  width: 80%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.45),
+      transparent
+    );
+
+  transform: skewX(-20deg);
+
+  transition: left .6s ease;
+}
+
+.continue-btn:hover::before {
+  left: 140%;
+}
+
+.continue-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 18px 40px rgba(18,150,220,.35);
+}
+
+.continue-btn:active {
+  transform: scale(.96);
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+#status {
+  min-height: 25px;
+  margin-top: 20px;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  transition: .3s ease;
+}
+
+.error {
+  color: #d62828;
+}
+
+.success {
+  color: #16803c;
+}
+
+.loading {
+  color: #178fbe;
+}
+
+
+/* =========================================================
+   RETRY BUTTON
+========================================================= */
+
+.retry-btn {
+  margin-top: 12px;
+
+  border: 1px solid rgba(9,32,45,.15);
+
+  padding: 10px 18px;
+
+  border-radius: 30px;
+
+  background: rgba(255,255,255,.55);
+
+  color: #09202d;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.retry-btn:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+  margin-top: 32px;
+
+  font-size: 10px;
+  letter-spacing: 2px;
+
+  color: rgba(9,32,45,.4);
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SUCCESS SCREEN
+========================================================= */
+
+.success-screen {
+  position: fixed;
+  inset: 0;
+
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(214,249,255,.98),
+      rgba(236,250,255,.96)
+    );
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity .6s ease,
+    visibility .6s ease;
+}
+
+.success-screen.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.success-content {
+  text-align: center;
+
+  transform: translateY(30px) scale(.95);
+
+  transition: .7s cubic-bezier(.16,1,.3,1);
+}
+
+.success-screen.active .success-content {
+  transform: translateY(0) scale(1);
+}
+
+.success-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+
+  animation:
+    successFloat 2s ease-in-out infinite;
+}
+
+.success-content h2 {
+  font-size: clamp(40px, 9vw, 70px);
+  letter-spacing: -4px;
+  margin-bottom: 15px;
+}
+
+.success-content p {
+  color: #607783;
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes float {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes floatDrop {
+  0%,100% {
+    transform:
+      rotate(45deg)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      rotate(45deg)
+      translateY(-12px);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-20px, -10px, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(30px, 20px, 0) scale(1.1);
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) scale(.5);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: .7;
+  }
+
+  80% {
+    opacity: .7;
+  }
+
+  100% {
+    transform: translateY(-110vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform:
+      perspective(1000px)
+      translateY(40px)
+      scale(.94);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      perspective(1000px)
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes successFloat {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .page {
+    padding: 15px;
+  }
+
+  .card {
+    padding:
+      60px
+      25px
+      35px;
+
+    border-radius: 30px;
+  }
+
+  h1 {
+    letter-spacing: -2px;
+  }
+
+  .description {
+    font-size: 15px;
+  }
+
+  .drop {
+    width: 90px;
+    height: 110px;
+    font-size: 55px;
+  }
+
+  .continue-btn {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background">
+
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>
+
+  <div class="drop-particle"></div>
+  <div class="drop-particle"></div>
+  <div class="drop-particle"></div>
+  <div class="drop-particle"></div>
+
+</div>
+
+<div class="grain"></div>
+
+
+<!-- MAIN PAGE -->
+
+<main class="page">
+
+  <section class="card" id="card">
+
+    <div class="label">
+      A little surprise
+    </div>
+
+
+    <div class="drop">
+      <span>💧</span>
+    </div>
+
+
+    <div class="eyebrow">
+      One tiny step
+    </div>
+
+
+    <h1>
+      Something<br>
+      is waiting.
+    </h1>
+
+
+    <p class="description">
+      There is a small surprise behind this button.
+      Tap continue and see what happens next.
+    </p>
+
+
+    <button
+      class="continue-btn"
+      id="continueBtn"
+      type="button"
+    >
+      Continue →
+    </button>
+
+
+    <div id="status"></div>
+
+
+    <div class="footer">
+      Made with a little curiosity
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- SUCCESS SCREEN -->
+
+<section
+  class="success-screen"
+  id="successScreen"
+  aria-hidden="true"
+>
+
+  <div class="success-content">
+
+    <div class="success-icon">
+      ✨
+    </div>
+
+    <h2>
+      Surprise!
+    </h2>
+
+    <p>
+      You made it to the other side.
+    </p>
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const card = document.getElementById("card");
+const button = document.getElementById("continueBtn");
+const statusBox = document.getElementById("status");
+const successScreen = document.getElementById("successScreen");
+
+
+/* =========================================================
+   3D READYMAG-STYLE CARD MOVEMENT
+========================================================= */
+
+document.addEventListener("mousemove", (event) => {
+
+  if (window.innerWidth < 700) return;
+
+  const x =
+    (event.clientX / window.innerWidth - 0.5);
+
+  const y =
+    (event.clientY / window.innerHeight - 0.5);
+
+  const rotateX = y * -5;
+  const rotateY = x * 5;
+
+  card.style.setProperty(
+    "--rx",
+    `${rotateX}deg`
+  );
+
+  card.style.setProperty(
+    "--ry",
+    `${rotateY}deg`
+  );
+
+});
+
+
+/* =========================================================
+   RESET CARD WHEN MOUSE LEAVES
+========================================================= */
+
+document.addEventListener("mouseleave", () => {
+
+  card.style.setProperty(
+    "--rx",
+    "0deg"
+  );
+
+  card.style.setProperty(
+    "--ry",
+    "0deg"
+  );
+
+});
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+button.addEventListener("click", () => {
+
+  button.disabled = true;
+
+  button.innerHTML =
+    "Opening <span>...</span>";
+
+  statusBox.className = "loading";
+
+  statusBox.innerHTML =
+    "Just a second…";
+
+
+  /* Small cinematic delay */
+
+  setTimeout(() => {
+
+    successScreen.classList.add("active");
+
+    successScreen.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+  }, 700);
+
+});
+
+
+/* =========================================================
+   CLICK OUTSIDE SUCCESS SCREEN
+========================================================= */
+
+successScreen.addEventListener(
+  "click",
+  (event) => {
+
+    if (
+      event.target === successScreen
+    ) {
+
+      successScreen.classList.remove(
+        "active"
+      );
+
+      successScreen.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      button.disabled = false;
+
+      button.innerHTML =
+        "Continue →";
+
+      statusBox.innerHTML = "";
+
     }
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #dff7ff, #f8fdff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      color: #102333;
+  }
+);
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (event.key === "Escape") {
+
+      successScreen.classList.remove(
+        "active"
+      );
+
+      successScreen.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      button.disabled = false;
+
+      button.innerHTML =
+        "Continue →";
+
+      statusBox.innerHTML = "";
+
     }
 
-    .card {
-      width: 100%;
-      max-width: 440px;
-      background: rgba(255, 255, 255, 0.94);
-      border-radius: 30px;
-      padding: 45px 25px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0, 80, 120, 0.15);
-    }
+  }
+);
 
-    .drop {
-      font-size: 75px;
-      margin-bottom: 18px;
-      animation: float 2s ease-in-out infinite;
-    }
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 15px;
-    }
+/* =========================================================
+   SUBTLE BUTTON MAGNET EFFECT
+========================================================= */
 
-    .description {
-      font-size: 17px;
-      line-height: 1.6;
-      color: #667781;
-      margin-bottom: 28px;
-    }
+button.addEventListener(
+  "mousemove",
+  (event) => {
 
-    .continue-btn {
-      border: none;
-      background: #1296dc;
-      color: white;
-      padding: 16px 30px;
-      border-radius: 50px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(18, 150, 220, 0.25);
-      transition: 0.25s;
-    }
+    const rect =
+      button.getBoundingClientRect();
 
-    .continue-btn:hover {
-      background: #087fc0;
-      transform: translateY(-2px);
-    }
+    const x =
+      event.clientX - rect.left -
+      rect.width / 2;
 
-    .continue-btn:active {
-      transform: scale(0.97);
-    }
+    const y =
+      event.clientY - rect.top -
+      rect.height / 2;
 
-    #status {
-      margin-top: 22px;
-      font-size: 15px;
-      line-height: 1.6;
-    }
+    button.style.transform =
+      `translate(${x * .08}px, ${y * .08}px)`;
 
-    .error {
-      color: #d62828;
-    }
+  }
+);
 
-    .success {
-      color: #16803c;
-    }
 
-    .retry-btn {
-      margin-top: 12px;
-      border: none;
-      padding: 11px 20px
-    }
+button.addEventListener(
+  "mouseleave",
+  () => {
+
+    button.style.transform =
+      "";
+
+  }
+);
+
+
+/* =========================================================
+   RANDOM FLOATING PARTICLES
+========================================================= */
+
+const background =
+  document.querySelector(".background");
+
+for (let i = 0; i < 8; i++) {
+
+  const particle =
+    document.createElement("div");
+
+  particle.className =
+    "drop-particle";
+
+  particle.style.left =
+    `${Math.random() * 100}%`;
+
+  particle.style.animationDuration =
+    `${8 + Math.random() * 10}s`;
+
+  particle.style.animationDelay =
+    `${Math.random() * 8}s`;
+
+  particle.style.width =
+    `${4 + Math.random() * 8}px`;
+
+  particle.style.height =
+    particle.style.width;
+
+  background.appendChild(
+    particle
+  );
+
+}
+
+</script>
+
+</body>
+</html>
