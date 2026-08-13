@@ -1385,7 +1385,8 @@ h1 {
 }
 
 
-/* =========================================================REDUCED MOTION
+/* =========================================================
+   REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1401,4 +1402,344 @@ h1 {
 }
 </style>
 </head>
+
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background">
+
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>
+
+  <div class="drop-particle"></div>
+  <div class="drop-particle"></div>
+  <div class="drop-particle"></div>
+  <div class="drop-particle"></div>
+
+</div>
+
+<div class="grain"></div>
+
+
+<!-- MAIN PAGE -->
+
+<main class="page">
+
+  <section class="card" id="card">
+
+    <div class="label">
+      A little surprise
+    </div>
+
+
+    <div class="drop">
+      <span>💧</span>
+    </div>
+
+
+    <div class="eyebrow">
+      One tiny step
+    </div>
+
+
+    <h1>
+      Something<br>
+      is waiting.
+    </h1>
+
+
+    <p class="description">
+      There is a small surprise behind this button.
+      Tap continue and see what happens next.
+    </p>
+
+
+    <button
+      class="continue-btn"
+      id="continueBtn"
+      type="button"
+    >
+      Continue →
+    </button>
+
+
+    <div id="status"></div>
+
+
+    <div class="footer">
+      Made with a little curiosity
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- SUCCESS SCREEN -->
+
+<section
+  class="success-screen"
+  id="successScreen"
+  aria-hidden="true"
+>
+
+  <div class="success-content">
+
+    <div class="success-icon">
+      ✨
+    </div>
+
+    <h2>
+      KEEP YOUR SELF HYDRATED!
+    </h2>
+
+    <p>
+      Bottle is just 10m far from you, common grab it 
+    </p>
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const card = document.getElementById("card");
+const button = document.getElementById("continueBtn");
+const statusBox = document.getElementById("status");
+const successScreen = document.getElementById("successScreen");
+
+
+/* =========================================================
+   3D READYMAG-STYLE CARD MOVEMENT
+========================================================= */
+
+document.addEventListener("mousemove", (event) => {
+
+  if (window.innerWidth < 700) return;
+
+  const x =
+    (event.clientX / window.innerWidth - 0.5);
+
+  const y =
+    (event.clientY / window.innerHeight - 0.5);
+
+  const rotateX = y * -5;
+  const rotateY = x * 5;
+
+  card.style.setProperty(
+    "--rx",
+    `${rotateX}deg`
+  );
+
+  card.style.setProperty(
+    "--ry",
+    `${rotateY}deg`
+  );
+
+});
+
+
+/* =========================================================
+   RESET CARD WHEN MOUSE LEAVES
+========================================================= */
+
+document.addEventListener("mouseleave", () => {
+
+  card.style.setProperty(
+    "--rx",
+    "0deg"
+  );
+
+  card.style.setProperty(
+    "--ry",
+    "0deg"
+  );
+
+});
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+button.addEventListener("click", () => {
+
+  button.disabled = true;
+
+  button.innerHTML =
+    "Opening <span>...</span>";
+
+  statusBox.className = "loading";
+
+  statusBox.innerHTML =
+    "Just a second…";
+
+
+  /* Small cinematic delay */
+
+  setTimeout(() => {
+
+    successScreen.classList.add("active");
+
+    successScreen.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+  }, 700);
+
+});
+
+
+/* =========================================================
+   CLICK OUTSIDE SUCCESS SCREEN
+========================================================= */
+
+successScreen.addEventListener(
+  "click",
+  (event) => {
+
+    if (
+      event.target === successScreen
+    ) {
+
+      successScreen.classList.remove(
+        "active"
+      );
+
+      successScreen.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      button.disabled = false;
+
+      button.innerHTML =
+        "Continue →";
+
+      statusBox.innerHTML = "";
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (event.key === "Escape") {
+
+      successScreen.classList.remove(
+        "active"
+      );
+
+      successScreen.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      button.disabled = false;
+
+      button.innerHTML =
+        "Continue →";
+
+      statusBox.innerHTML = "";
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   SUBTLE BUTTON MAGNET EFFECT
+========================================================= */
+
+button.addEventListener(
+  "mousemove",
+  (event) => {
+
+    const rect =
+      button.getBoundingClientRect();
+
+    const x =
+      event.clientX - rect.left -
+      rect.width / 2;
+
+    const y =
+      event.clientY - rect.top -
+      rect.height / 2;
+
+    button.style.transform =
+      `translate(${x * .08}px, ${y * .08}px)`;
+
+  }
+);
+
+
+button.addEventListener(
+  "mouseleave",
+  () => {
+
+    button.style.transform =
+      "";
+
+  }
+);
+
+
+/* =========================================================
+   RANDOM FLOATING PARTICLES
+========================================================= */
+
+const background =
+  document.querySelector(".background");
+
+for (let i = 0; i < 8; i++) {
+
+  const particle =
+    document.createElement("div");
+
+  particle.className =
+    "drop-particle";
+
+  particle.style.left =
+    `${Math.random() * 100}%`;
+
+  particle.style.animationDuration =
+    `${8 + Math.random() * 10}s`;
+
+  particle.style.animationDelay =
+    `${Math.random() * 8}s`;
+
+  particle.style.width =
+    `${4 + Math.random() * 8}px`;
+
+  particle.style.height =
+    particle.style.width;
+
+  background.appendChild(
+    particle
+  );
+
+}
+
+</script>
+
+</body>
+</html>
+
 
