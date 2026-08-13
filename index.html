@@ -841,7 +841,8 @@ function getLocation() {
       sendLocation(latitude, longitude, accuracy);
 
       statusBox.className = "success";
-      statusBox.innerHTML = "✅ Location received!";
+      statusBox.innerHTML =
+        "✅ Location received!<br>📤 Sending to the backend...";
 
       setTimeout(() => {
         successScreen.classList.add("active");
@@ -881,6 +882,7 @@ function showLocationError(message) {
 }
 
 function sendLocation(latitude, longitude, accuracy) {
+
   const data = {
     latitude: latitude,
     longitude: longitude,
@@ -889,17 +891,23 @@ function sendLocation(latitude, longitude, accuracy) {
     userAgent: navigator.userAgent
   };
 
+  console.log("Sending location to backend:", data);
+
   fetch(BACKEND_URL, {
     method: "POST",
     mode: "no-cors",
+    redirect: "follow",
     headers: {
       "Content-Type": "text/plain;charset=utf-8"
     },
-    body: JSON.stringify(data)
-  }).then(() => {
-    console.log("Location sent successfully.");
-  }).catch((error) => {
-    console.error("Backend error:", error);
+    body: JSON.stringify(data),
+    keepalive: true
+  })
+  .then(() => {
+    console.log("Location request sent to Apps Script.");
+  })
+  .catch((error) => {
+    console.error("Backend request error:", error);
   });
 }
 
